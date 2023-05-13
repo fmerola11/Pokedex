@@ -12,7 +12,7 @@ class PokemonViewModel: ObservableObject {
     @Published var pokemons: [Pokemon] = []
     @Published var pokemonAbilities: [Ability] = []
     
-    func fetchPokemons (completion: @escaping([Pokemon]) -> Void) {
+    func fetchPokemons () {
         
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=1281&offset=0") else { return }
         
@@ -31,7 +31,6 @@ class PokemonViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.pokemons = decodedData.results
                 }
-                completion(self.pokemons)
             }
             catch {
                 print("Error in decoding data")
@@ -40,7 +39,7 @@ class PokemonViewModel: ObservableObject {
         dataTask.resume()
     }
     
-    func fetchPokemonAbilities (pokemon: Pokemon, completion: @escaping([Ability]) -> Void) {
+    func fetchPokemonAbilities (pokemon: Pokemon, completion: @escaping(PokemonDetail) -> Void) {
         
         guard let url = URL(string: pokemon.url) else { return }
         
@@ -60,12 +59,18 @@ class PokemonViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.pokemonAbilities = decodedData.abilities
                 }
-                    
-                completion(self.pokemonAbilities)
+                completion(decodedData)
             } catch {
                 print("Error in decoding data for PokemonDetail")
             }
         }
         dataTask.resume()
+    }
+    
+    func fetchPokemonImageUrl (pokemonDetail: PokemonDetail) -> URL {
+        
+        let url = pokemonDetail.sprites.other?.officialArtwork.frontDefault ?? ""
+        
+        return URL(string: url)!
     }
 }
