@@ -15,12 +15,15 @@ struct ListView: View {
         NavigationStack {
             List {
                 ForEach(viewModel.pokemons) { pokemon in
-                    Text(pokemon.name.capitalized)
+                    NavigationLink(destination: DetailView(pokemon: pokemon, viewModel: viewModel)) {
+                        Text(pokemon.name.capitalized)
+                    }
                 }
             }
             .navigationTitle("Pokedex")
-            .onAppear() {
+            .onAppear {
                 viewModel.fetchPokemons { pokemon in
+                    
                 }
             }
         }
