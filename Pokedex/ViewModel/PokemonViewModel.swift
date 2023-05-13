@@ -10,8 +10,9 @@ import Foundation
 class PokemonViewModel: ObservableObject {
     
     @Published var pokemons: [Pokemon] = []
+    @Published var pokemonAbilities: [Ability] = []
     
-    func fetchPokemons (completion: @escaping ([Pokemon]) -> Void) {
+    func fetchPokemons (completion: @escaping([Pokemon]) -> Void) {
         
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=1281&offset=0") else { return }
         
@@ -27,7 +28,9 @@ class PokemonViewModel: ObservableObject {
             
             do {
                 let decodedData = try decoder.decode(Response.self, from: jsonData)
-                self.pokemons = decodedData.results
+                DispatchQueue.main.async {
+                    self.pokemons = decodedData.results
+                }
                 completion(self.pokemons)
             }
             catch {
@@ -37,12 +40,15 @@ class PokemonViewModel: ObservableObject {
         dataTask.resume()
     }
     
-    func fetchPokemonDetails (pokemon: Pokemon, completion: @escaping (PokemonDetail) -> Void) {
+    func fetchPokemonAbilities (pokemon: Pokemon, completion: @escaping([Ability]) -> Void) {
         
         guard let url = URL(string: pokemon.url) else { return }
         
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard error != nil else { return }
+            
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            }
             
             guard let jsonData = data else { return }
             
@@ -50,9 +56,14 @@ class PokemonViewModel: ObservableObject {
             
             do {
                 let decodedData = try decoder.decode(PokemonDetail.self, from: jsonData)
-                completion(decodedData)
+                
+                DispatchQueue.main.async {
+                    self.pokemonAbilities = decodedData.abilities
+                }
+                    
+                completion(self.pokemonAbilities)
             } catch {
-                print("Error in decoding data")
+                print("Error in decoding data for PokemonDetail")
             }
         }
         dataTask.resume()

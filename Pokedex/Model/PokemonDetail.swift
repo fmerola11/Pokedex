@@ -1,20 +1,21 @@
 //
-//  PokemonDetails.swift
+//  PokemonDetail.swift
 //  Pokedex
 //
-//  Created by Francesco Merola on 11/05/23.
+//  Created by Francesco Merola on 05/04/23.
 //
 
 import Foundation
 
-// MARK: - PokemonDetails
+// MARK: - PokemonDetail
+
 struct PokemonDetail: Codable {
     let abilities: [Ability]
     let baseExperience: Int
     let forms: [Species]
     let gameIndices: [GameIndex]
     let height: Int
-    let heldItems: [HeldItem]
+    let heldItems: [JSONAny]
     let id: Int
     let isDefault: Bool
     let locationAreaEncounters: String
@@ -44,8 +45,80 @@ struct PokemonDetail: Codable {
     }
 }
 
+// MARK: PokemonDetail convenience initializers and mutators
+
+extension PokemonDetail {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(PokemonDetail.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        abilities: [Ability]? = nil,
+        baseExperience: Int? = nil,
+        forms: [Species]? = nil,
+        gameIndices: [GameIndex]? = nil,
+        height: Int? = nil,
+        heldItems: [JSONAny]? = nil,
+        id: Int? = nil,
+        isDefault: Bool? = nil,
+        locationAreaEncounters: String? = nil,
+        moves: [Move]? = nil,
+        name: String? = nil,
+        order: Int? = nil,
+        pastTypes: [JSONAny]? = nil,
+        species: Species? = nil,
+        sprites: Sprites? = nil,
+        stats: [Stat]? = nil,
+        types: [TypeElement]? = nil,
+        weight: Int? = nil
+    ) -> PokemonDetail {
+        return PokemonDetail(
+            abilities: abilities ?? self.abilities,
+            baseExperience: baseExperience ?? self.baseExperience,
+            forms: forms ?? self.forms,
+            gameIndices: gameIndices ?? self.gameIndices,
+            height: height ?? self.height,
+            heldItems: heldItems ?? self.heldItems,
+            id: id ?? self.id,
+            isDefault: isDefault ?? self.isDefault,
+            locationAreaEncounters: locationAreaEncounters ?? self.locationAreaEncounters,
+            moves: moves ?? self.moves,
+            name: name ?? self.name,
+            order: order ?? self.order,
+            pastTypes: pastTypes ?? self.pastTypes,
+            species: species ?? self.species,
+            sprites: sprites ?? self.sprites,
+            stats: stats ?? self.stats,
+            types: types ?? self.types,
+            weight: weight ?? self.weight
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - Ability
-struct Ability: Codable {
+struct Ability: Codable, Identifiable {
+    
+    var id = UUID()
+    
     let ability: Species
     let isHidden: Bool
     let slot: Int
@@ -57,10 +130,86 @@ struct Ability: Codable {
     }
 }
 
+// MARK: Ability convenience initializers and mutators
+
+extension Ability {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Ability.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        ability: Species? = nil,
+        isHidden: Bool? = nil,
+        slot: Int? = nil
+    ) -> Ability {
+        return Ability(
+            ability: ability ?? self.ability,
+            isHidden: isHidden ?? self.isHidden,
+            slot: slot ?? self.slot
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - Species
 struct Species: Codable {
     let name: String
     let url: String
+}
+
+// MARK: Species convenience initializers and mutators
+
+extension Species {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Species.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        name: String? = nil,
+        url: String? = nil
+    ) -> Species {
+        return Species(
+            name: name ?? self.name,
+            url: url ?? self.url
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
 }
 
 // MARK: - GameIndex
@@ -74,21 +223,41 @@ struct GameIndex: Codable {
     }
 }
 
-// MARK: - HeldItem
-struct HeldItem: Codable {
-    let item: Species
-    let versionDetails: [VersionDetail]
+// MARK: GameIndex convenience initializers and mutators
 
-    enum CodingKeys: String, CodingKey {
-        case item
-        case versionDetails = "version_details"
+extension GameIndex {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GameIndex.self, from: data)
     }
-}
 
-// MARK: - VersionDetail
-struct VersionDetail: Codable {
-    let rarity: Int
-    let version: Species
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        gameIndex: Int? = nil,
+        version: Species? = nil
+    ) -> GameIndex {
+        return GameIndex(
+            gameIndex: gameIndex ?? self.gameIndex,
+            version: version ?? self.version
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
 }
 
 // MARK: - Move
@@ -99,6 +268,43 @@ struct Move: Codable {
     enum CodingKeys: String, CodingKey {
         case move
         case versionGroupDetails = "version_group_details"
+    }
+}
+
+// MARK: Move convenience initializers and mutators
+
+extension Move {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Move.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        move: Species? = nil,
+        versionGroupDetails: [VersionGroupDetail]? = nil
+    ) -> Move {
+        return Move(
+            move: move ?? self.move,
+            versionGroupDetails: versionGroupDetails ?? self.versionGroupDetails
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -114,12 +320,86 @@ struct VersionGroupDetail: Codable {
     }
 }
 
+// MARK: VersionGroupDetail convenience initializers and mutators
+
+extension VersionGroupDetail {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(VersionGroupDetail.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        levelLearnedAt: Int? = nil,
+        moveLearnMethod: Species? = nil,
+        versionGroup: Species? = nil
+    ) -> VersionGroupDetail {
+        return VersionGroupDetail(
+            levelLearnedAt: levelLearnedAt ?? self.levelLearnedAt,
+            moveLearnMethod: moveLearnMethod ?? self.moveLearnMethod,
+            versionGroup: versionGroup ?? self.versionGroup
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - GenerationV
 struct GenerationV: Codable {
     let blackWhite: Sprites
 
     enum CodingKeys: String, CodingKey {
         case blackWhite = "black-white"
+    }
+}
+
+// MARK: GenerationV convenience initializers and mutators
+
+extension GenerationV {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationV.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        blackWhite: Sprites? = nil
+    ) -> GenerationV {
+        return GenerationV(
+            blackWhite: blackWhite ?? self.blackWhite
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -131,6 +411,45 @@ struct GenerationIv: Codable {
         case diamondPearl = "diamond-pearl"
         case heartgoldSoulsilver = "heartgold-soulsilver"
         case platinum
+    }
+}
+
+// MARK: GenerationIv convenience initializers and mutators
+
+extension GenerationIv {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationIv.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        diamondPearl: Sprites? = nil,
+        heartgoldSoulsilver: Sprites? = nil,
+        platinum: Sprites? = nil
+    ) -> GenerationIv {
+        return GenerationIv(
+            diamondPearl: diamondPearl ?? self.diamondPearl,
+            heartgoldSoulsilver: heartgoldSoulsilver ?? self.heartgoldSoulsilver,
+            platinum: platinum ?? self.platinum
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -154,6 +473,55 @@ struct Versions: Codable {
         case generationVi = "generation-vi"
         case generationVii = "generation-vii"
         case generationViii = "generation-viii"
+    }
+}
+
+// MARK: Versions convenience initializers and mutators
+
+extension Versions {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Versions.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        generationI: GenerationI? = nil,
+        generationIi: GenerationIi? = nil,
+        generationIii: GenerationIii? = nil,
+        generationIv: GenerationIv? = nil,
+        generationV: GenerationV? = nil,
+        generationVi: [String: Home]? = nil,
+        generationVii: GenerationVii? = nil,
+        generationViii: GenerationViii? = nil
+    ) -> Versions {
+        return Versions(
+            generationI: generationI ?? self.generationI,
+            generationIi: generationIi ?? self.generationIi,
+            generationIii: generationIii ?? self.generationIii,
+            generationIv: generationIv ?? self.generationIv,
+            generationV: generationV ?? self.generationV,
+            generationVi: generationVi ?? self.generationVi,
+            generationVii: generationVii ?? self.generationVii,
+            generationViii: generationViii ?? self.generationViii
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -198,6 +566,62 @@ class Sprites: Codable {
     }
 }
 
+// MARK: Sprites convenience initializers and mutators
+
+extension Sprites {
+    convenience init(data: Data) throws {
+        let me = try newJSONDecoder().decode(Sprites.self, from: data)
+        self.init(backDefault: me.backDefault, backFemale: me.backFemale, backShiny: me.backShiny, backShinyFemale: me.backShinyFemale, frontDefault: me.frontDefault, frontFemale: me.frontFemale, frontShiny: me.frontShiny, frontShinyFemale: me.frontShinyFemale, other: me.other, versions: me.versions, animated: me.animated)
+    }
+
+    convenience init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    convenience init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        backDefault: String? = nil,
+        backFemale: JSONNull?? = nil,
+        backShiny: String? = nil,
+        backShinyFemale: JSONNull?? = nil,
+        frontDefault: String? = nil,
+        frontFemale: JSONNull?? = nil,
+        frontShiny: String? = nil,
+        frontShinyFemale: JSONNull?? = nil,
+        other: Other?? = nil,
+        versions: Versions?? = nil,
+        animated: Sprites?? = nil
+    ) -> Sprites {
+        return Sprites(
+            backDefault: backDefault ?? self.backDefault,
+            backFemale: backFemale ?? self.backFemale,
+            backShiny: backShiny ?? self.backShiny,
+            backShinyFemale: backShinyFemale ?? self.backShinyFemale,
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontFemale: frontFemale ?? self.frontFemale,
+            frontShiny: frontShiny ?? self.frontShiny,
+            frontShinyFemale: frontShinyFemale ?? self.frontShinyFemale,
+            other: other ?? self.other,
+            versions: versions ?? self.versions,
+            animated: animated ?? self.animated
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - GenerationI
 struct GenerationI: Codable {
     let redBlue, yellow: RedBlue
@@ -205,6 +629,43 @@ struct GenerationI: Codable {
     enum CodingKeys: String, CodingKey {
         case redBlue = "red-blue"
         case yellow
+    }
+}
+
+// MARK: GenerationI convenience initializers and mutators
+
+extension GenerationI {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationI.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        redBlue: RedBlue? = nil,
+        yellow: RedBlue? = nil
+    ) -> GenerationI {
+        return GenerationI(
+            redBlue: redBlue ?? self.redBlue,
+            yellow: yellow ?? self.yellow
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -223,10 +684,94 @@ struct RedBlue: Codable {
     }
 }
 
+// MARK: RedBlue convenience initializers and mutators
+
+extension RedBlue {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(RedBlue.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        backDefault: String? = nil,
+        backGray: String? = nil,
+        backTransparent: String? = nil,
+        frontDefault: String? = nil,
+        frontGray: String? = nil,
+        frontTransparent: String? = nil
+    ) -> RedBlue {
+        return RedBlue(
+            backDefault: backDefault ?? self.backDefault,
+            backGray: backGray ?? self.backGray,
+            backTransparent: backTransparent ?? self.backTransparent,
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontGray: frontGray ?? self.frontGray,
+            frontTransparent: frontTransparent ?? self.frontTransparent
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - GenerationIi
 struct GenerationIi: Codable {
     let crystal: Crystal
     let gold, silver: Gold
+}
+
+// MARK: GenerationIi convenience initializers and mutators
+
+extension GenerationIi {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationIi.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        crystal: Crystal? = nil,
+        gold: Gold? = nil,
+        silver: Gold? = nil
+    ) -> GenerationIi {
+        return GenerationIi(
+            crystal: crystal ?? self.crystal,
+            gold: gold ?? self.gold,
+            silver: silver ?? self.silver
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
 }
 
 // MARK: - Crystal
@@ -246,6 +791,55 @@ struct Crystal: Codable {
     }
 }
 
+// MARK: Crystal convenience initializers and mutators
+
+extension Crystal {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Crystal.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        backDefault: String? = nil,
+        backShiny: String? = nil,
+        backShinyTransparent: String? = nil,
+        backTransparent: String? = nil,
+        frontDefault: String? = nil,
+        frontShiny: String? = nil,
+        frontShinyTransparent: String? = nil,
+        frontTransparent: String? = nil
+    ) -> Crystal {
+        return Crystal(
+            backDefault: backDefault ?? self.backDefault,
+            backShiny: backShiny ?? self.backShiny,
+            backShinyTransparent: backShinyTransparent ?? self.backShinyTransparent,
+            backTransparent: backTransparent ?? self.backTransparent,
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontShiny: frontShiny ?? self.frontShiny,
+            frontShinyTransparent: frontShinyTransparent ?? self.frontShinyTransparent,
+            frontTransparent: frontTransparent ?? self.frontTransparent
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - Gold
 struct Gold: Codable {
     let backDefault, backShiny, frontDefault, frontShiny: String
@@ -257,6 +851,49 @@ struct Gold: Codable {
         case frontDefault = "front_default"
         case frontShiny = "front_shiny"
         case frontTransparent = "front_transparent"
+    }
+}
+
+// MARK: Gold convenience initializers and mutators
+
+extension Gold {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Gold.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        backDefault: String? = nil,
+        backShiny: String? = nil,
+        frontDefault: String? = nil,
+        frontShiny: String? = nil,
+        frontTransparent: String?? = nil
+    ) -> Gold {
+        return Gold(
+            backDefault: backDefault ?? self.backDefault,
+            backShiny: backShiny ?? self.backShiny,
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontShiny: frontShiny ?? self.frontShiny,
+            frontTransparent: frontTransparent ?? self.frontTransparent
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -272,6 +909,45 @@ struct GenerationIii: Codable {
     }
 }
 
+// MARK: GenerationIii convenience initializers and mutators
+
+extension GenerationIii {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationIii.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        emerald: OfficialArtwork? = nil,
+        fireredLeafgreen: Gold? = nil,
+        rubySapphire: Gold? = nil
+    ) -> GenerationIii {
+        return GenerationIii(
+            emerald: emerald ?? self.emerald,
+            fireredLeafgreen: fireredLeafgreen ?? self.fireredLeafgreen,
+            rubySapphire: rubySapphire ?? self.rubySapphire
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - OfficialArtwork
 struct OfficialArtwork: Codable {
     let frontDefault, frontShiny: String
@@ -279,6 +955,43 @@ struct OfficialArtwork: Codable {
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
         case frontShiny = "front_shiny"
+    }
+}
+
+// MARK: OfficialArtwork convenience initializers and mutators
+
+extension OfficialArtwork {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(OfficialArtwork.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        frontDefault: String? = nil,
+        frontShiny: String? = nil
+    ) -> OfficialArtwork {
+        return OfficialArtwork(
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontShiny: frontShiny ?? self.frontShiny
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -297,6 +1010,47 @@ struct Home: Codable {
     }
 }
 
+// MARK: Home convenience initializers and mutators
+
+extension Home {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Home.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        frontDefault: String? = nil,
+        frontFemale: JSONNull?? = nil,
+        frontShiny: String? = nil,
+        frontShinyFemale: JSONNull?? = nil
+    ) -> Home {
+        return Home(
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontFemale: frontFemale ?? self.frontFemale,
+            frontShiny: frontShiny ?? self.frontShiny,
+            frontShinyFemale: frontShinyFemale ?? self.frontShinyFemale
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - GenerationVii
 struct GenerationVii: Codable {
     let icons: DreamWorld
@@ -305,6 +1059,43 @@ struct GenerationVii: Codable {
     enum CodingKeys: String, CodingKey {
         case icons
         case ultraSunUltraMoon = "ultra-sun-ultra-moon"
+    }
+}
+
+// MARK: GenerationVii convenience initializers and mutators
+
+extension GenerationVii {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationVii.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        icons: DreamWorld? = nil,
+        ultraSunUltraMoon: Home? = nil
+    ) -> GenerationVii {
+        return GenerationVii(
+            icons: icons ?? self.icons,
+            ultraSunUltraMoon: ultraSunUltraMoon ?? self.ultraSunUltraMoon
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -319,9 +1110,81 @@ struct DreamWorld: Codable {
     }
 }
 
+// MARK: DreamWorld convenience initializers and mutators
+
+extension DreamWorld {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(DreamWorld.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        frontDefault: String? = nil,
+        frontFemale: JSONNull?? = nil
+    ) -> DreamWorld {
+        return DreamWorld(
+            frontDefault: frontDefault ?? self.frontDefault,
+            frontFemale: frontFemale ?? self.frontFemale
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - GenerationViii
 struct GenerationViii: Codable {
     let icons: DreamWorld
+}
+
+// MARK: GenerationViii convenience initializers and mutators
+
+extension GenerationViii {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(GenerationViii.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        icons: DreamWorld? = nil
+    ) -> GenerationViii {
+        return GenerationViii(
+            icons: icons ?? self.icons
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
 }
 
 // MARK: - Other
@@ -337,6 +1200,45 @@ struct Other: Codable {
     }
 }
 
+// MARK: Other convenience initializers and mutators
+
+extension Other {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Other.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        dreamWorld: DreamWorld? = nil,
+        home: Home? = nil,
+        officialArtwork: OfficialArtwork? = nil
+    ) -> Other {
+        return Other(
+            dreamWorld: dreamWorld ?? self.dreamWorld,
+            home: home ?? self.home,
+            officialArtwork: officialArtwork ?? self.officialArtwork
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - Stat
 struct Stat: Codable {
     let baseStat, effort: Int
@@ -348,10 +1250,104 @@ struct Stat: Codable {
     }
 }
 
+// MARK: Stat convenience initializers and mutators
+
+extension Stat {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(Stat.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        baseStat: Int? = nil,
+        effort: Int? = nil,
+        stat: Species? = nil
+    ) -> Stat {
+        return Stat(
+            baseStat: baseStat ?? self.baseStat,
+            effort: effort ?? self.effort,
+            stat: stat ?? self.stat
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
 // MARK: - TypeElement
 struct TypeElement: Codable {
     let slot: Int
     let type: Species
+}
+
+// MARK: TypeElement convenience initializers and mutators
+
+extension TypeElement {
+    init(data: Data) throws {
+        self = try newJSONDecoder().decode(TypeElement.self, from: data)
+    }
+
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        try self.init(data: data)
+    }
+
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
+    }
+
+    func with(
+        slot: Int? = nil,
+        type: Species? = nil
+    ) -> TypeElement {
+        return TypeElement(
+            slot: slot ?? self.slot,
+            type: type ?? self.type
+        )
+    }
+
+    func jsonData() throws -> Data {
+        return try newJSONEncoder().encode(self)
+    }
+
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
+    }
+}
+
+// MARK: - Helper functions for creating encoders and decoders
+
+func newJSONDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        decoder.dateDecodingStrategy = .iso8601
+    }
+    return decoder
+}
+
+func newJSONEncoder() -> JSONEncoder {
+    let encoder = JSONEncoder()
+    if #available(iOS 10.0, OSX 10.12, tvOS 10.0, watchOS 3.0, *) {
+        encoder.dateEncodingStrategy = .iso8601
+    }
+    return encoder
 }
 
 // MARK: - Encode/decode helpers
@@ -570,3 +1566,4 @@ class JSONAny: Codable {
         }
     }
 }
+
