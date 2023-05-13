@@ -22,7 +22,7 @@ struct DetailView: View {
                 HStack {
                     if viewModel.pokemonAbilities.isEmpty {
                         Text("Loading abilities...")
-                            .padding(.trailing, 215)
+                
                     } else {
                         ForEach(viewModel.pokemonAbilities) { ability in
                             Text(ability.ability.name)
