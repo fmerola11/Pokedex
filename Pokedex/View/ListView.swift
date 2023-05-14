@@ -22,9 +22,7 @@ struct ListView: View {
             }
             .navigationTitle("Pokedex")
             .onAppear {
-                viewModel.fetchPokemons { pokemon in
-                    
-                }
+                viewModel.fetchPokemons()
             }
         }
     }
