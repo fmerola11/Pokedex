@@ -11,6 +11,9 @@ class PokemonViewModel: ObservableObject {
     
     @Published var pokemons: [Pokemon] = []
     @Published var pokemonAbilities: [Ability] = []
+    @Published var pokemonMoves: [Move] = []
+    @Published var pokemonHeight: Int = 0
+    @Published var pokemonWeight: Int = 0
     
     func fetchPokemons () {
         
@@ -39,7 +42,7 @@ class PokemonViewModel: ObservableObject {
         dataTask.resume()
     }
     
-    func fetchPokemonAbilities (pokemon: Pokemon, completion: @escaping(PokemonDetail) -> Void) {
+    func fetchPokemonDetails (pokemon: Pokemon, completion: @escaping(PokemonDetail) -> Void) {
         
         guard let url = URL(string: pokemon.url) else { return }
         
@@ -58,6 +61,9 @@ class PokemonViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.pokemonAbilities = decodedData.abilities
+                    self.pokemonMoves = decodedData.moves
+                    self.pokemonHeight = decodedData.height
+                    self.pokemonWeight = decodedData.weight
                 }
                 completion(decodedData)
             } catch {

@@ -13,12 +13,18 @@ struct ListView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(viewModel.pokemons) { pokemon in
-                    NavigationLink(destination: DetailView(pokemon: pokemon, viewModel: viewModel)) {
-                        Text(pokemon.name.capitalized)
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea()
+                List {
+                    ForEach(viewModel.pokemons) { pokemon in
+                        NavigationLink(destination: DetailView(pokemon: pokemon, viewModel: viewModel)) {
+                                Text(pokemon.name.capitalized)
+                        }
                     }
                 }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Pokedex")
             .onAppear {
