@@ -10,6 +10,7 @@ import SwiftUI
 struct ListView: View {
     
     @StateObject private var viewModel = PokemonViewModel()
+    @State private var searchText = ""
     
     var body: some View {
         NavigationStack {
@@ -17,14 +18,16 @@ struct ListView: View {
                 LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
                 List {
-                    ForEach(viewModel.pokemons) { pokemon in
+                    
+                    ForEach(viewModel.filteredPokemons(searchText: searchText)) { pokemon in
                         NavigationLink(destination: DetailView(pokemon: pokemon, viewModel: viewModel)) {
-                                Text(pokemon.name.capitalized)
+                            Text(pokemon.name.capitalized)
                         }
                     }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
+                .searchable(text: $searchText)
             }
             .navigationTitle("Pokedex")
             .onAppear {

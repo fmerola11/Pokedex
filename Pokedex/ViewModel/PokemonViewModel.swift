@@ -42,6 +42,16 @@ class PokemonViewModel: ObservableObject {
         dataTask.resume()
     }
     
+    func filteredPokemons(searchText: String) -> [Pokemon] {
+           if searchText.isEmpty {
+               return pokemons
+           } else {
+               return pokemons.filter { pokemon in
+                   pokemon.name.localizedCaseInsensitiveContains(searchText)
+               }
+           }
+       }
+    
     func fetchPokemonDetails (pokemon: Pokemon, completion: @escaping(PokemonDetail) -> Void) {
         
         guard let url = URL(string: pokemon.url) else { return }
