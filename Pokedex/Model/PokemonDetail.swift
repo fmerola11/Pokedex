@@ -261,7 +261,10 @@ extension GameIndex {
 }
 
 // MARK: - Move
-struct Move: Codable {
+struct Move: Codable, Identifiable {
+    
+    var id = UUID()
+    
     let move: Species
     let versionGroupDetails: [VersionGroupDetail]
 

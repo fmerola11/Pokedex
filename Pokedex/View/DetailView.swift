@@ -17,33 +17,65 @@ struct DetailView: View {
     
     var body: some View {
         NavigationStack {
-            VStack (spacing: 10) {
-                AsyncImage(url: imageURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } placeholder: {
-                    ProgressView()
-                }
-                Text("Abilities")
-                    .font(.title)
-                    .fontWeight(.medium)
-                HStack {
-                    if viewModel.pokemonAbilities.isEmpty {
-                        Text("Loading abilities...")
-                    } else {
-                        ForEach(viewModel.pokemonAbilities) { pokemonAbility in
-                            Text(pokemonAbility.ability.name)
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea()
+                VStack (spacing: 10) {
+                    VStack (spacing: 5) {
+                        AsyncImage(url: imageURL) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        Text("Abilities")
+                            .font(.title)
+                            .fontWeight(.medium)
+                        HStack {
+                            if viewModel.pokemonAbilities.isEmpty {
+                                Text("Loading abilities...")
+                            } else {
+                                ForEach(viewModel.pokemonAbilities) { pokemonAbility in
+                                    Text(pokemonAbility.ability.name.capitalized)
+                                }
+                            }
                         }
                     }
+                    VStack (spacing: 5) {
+                        Text("Moves")
+                            .font(.title)
+                            .fontWeight(.medium)
+                        HStack {
+                            if viewModel.pokemonMoves.isEmpty {
+                                Text("Loading moves...")
+                            } else {
+                                ForEach(viewModel.pokemonMoves.prefix(4)) { pokemonMove in
+                                    Text(pokemonMove.move.name.capitalized)
+                                }
+                            }
+                        }
+                    }
+                    VStack (spacing: 5) {
+                        Text("Height")
+                            .font(.title)
+                            .fontWeight(.medium)
+                        Text("\(viewModel.pokemonHeight) cm")
+                    }
+                    VStack (spacing: 5) {
+                        Text("Weight")
+                            .font(.title)
+                            .fontWeight(.medium)
+                        Text("\(viewModel.pokemonWeight) kg")
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
             .navigationTitle(pokemon.name.capitalized)
             .onAppear {
-                viewModel.fetchPokemonAbilities(pokemon: pokemon) { pokemonDetail in
-                    
-                    self.imageURL = viewModel.fetchPokemonImageUrl(pokemonDetail: pokemonDetail)
+                viewModel.fetchPokemonDetails(pokemon: pokemon) { pokemonDetail in
+                    self.imageURL = 
+                    viewModel.fetchPokemonImageUrl(pokemonDetail: pokemonDetail)
                 }
             }
         }
