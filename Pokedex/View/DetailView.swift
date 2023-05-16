@@ -21,7 +21,7 @@ struct DetailView: View {
                 LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
                 VStack (spacing: 10) {
-                    VStack (spacing: 5) {
+                    VStack {
                         AsyncImage(url: imageURL) { image in
                             image
                                 .resizable()
@@ -60,13 +60,21 @@ struct DetailView: View {
                         Text("Height")
                             .font(.title)
                             .fontWeight(.medium)
-                        Text("\(viewModel.pokemonHeight) cm")
+                        if viewModel.pokemonHeight == 0 {
+                            Text("Loading height...")
+                        } else {
+                            Text("\(viewModel.pokemonHeight) cm")
+                        }
                     }
                     VStack (spacing: 5) {
                         Text("Weight")
                             .font(.title)
                             .fontWeight(.medium)
-                        Text("\(viewModel.pokemonWeight) kg")
+                        if viewModel.pokemonHeight == 0 {
+                            Text("Loading weight...")
+                        } else {
+                            Text("\(viewModel.pokemonWeight) kg")
+                        }
                     }
                     Spacer()
                 }
