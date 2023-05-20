@@ -15,6 +15,11 @@ struct DetailView: View {
     
     @State private var imageURL: URL?
     
+    @State var pokemonAbilities: [Ability] = []
+    @State var pokemonMoves: [Move] = []
+    @State var pokemonHeight: Int = 0
+    @State var pokemonWeight: Int = 0
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -33,10 +38,10 @@ struct DetailView: View {
                             .font(.title)
                             .fontWeight(.medium)
                         HStack {
-                            if viewModel.pokemonAbilities.isEmpty {
+                            if pokemonAbilities.isEmpty {
                                 Text("Loading abilities...")
                             } else {
-                                ForEach(viewModel.pokemonAbilities) { pokemonAbility in
+                                ForEach(pokemonAbilities) { pokemonAbility in
                                     Text(pokemonAbility.ability.name.capitalized)
                                 }
                             }
@@ -47,10 +52,10 @@ struct DetailView: View {
                             .font(.title)
                             .fontWeight(.medium)
                         HStack {
-                            if viewModel.pokemonMoves.isEmpty {
+                            if pokemonMoves.isEmpty {
                                 Text("Loading moves...")
                             } else {
-                                ForEach(viewModel.pokemonMoves.prefix(4)) { pokemonMove in
+                                ForEach(pokemonMoves.prefix(4)) { pokemonMove in
                                     Text(pokemonMove.move.name.capitalized)
                                 }
                             }
@@ -60,20 +65,20 @@ struct DetailView: View {
                         Text("Height")
                             .font(.title)
                             .fontWeight(.medium)
-                        if viewModel.pokemonHeight == 0 {
+                        if pokemonHeight == 0 {
                             Text("Loading height...")
                         } else {
-                            Text("\(viewModel.pokemonHeight) cm")
+                            Text("\(pokemonHeight) cm")
                         }
                     }
                     VStack (spacing: 5) {
                         Text("Weight")
                             .font(.title)
                             .fontWeight(.medium)
-                        if viewModel.pokemonHeight == 0 {
+                        if pokemonHeight == 0 {
                             Text("Loading weight...")
                         } else {
-                            Text("\(viewModel.pokemonWeight) kg")
+                            Text("\(pokemonWeight) kg")
                         }
                     }
                     Spacer()
@@ -82,6 +87,10 @@ struct DetailView: View {
             .navigationTitle(pokemon.name.capitalized)
             .onAppear {
                 viewModel.fetchPokemonDetails(pokemon: pokemon) { pokemonDetail in
+                    self.pokemonAbilities = pokemonDetail.abilities
+                    self.pokemonMoves = pokemonDetail.moves
+                    self.pokemonHeight = pokemonDetail.height
+                    self.pokemonWeight = pokemonDetail.weight
                     self.imageURL = 
                     viewModel.fetchPokemonImageUrl(pokemonDetail: pokemonDetail)
                 }
