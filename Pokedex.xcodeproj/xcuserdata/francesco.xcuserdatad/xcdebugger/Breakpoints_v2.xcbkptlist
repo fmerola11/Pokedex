@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "2591B774-CFDB-4BA8-AF9B-67E00F0EEEEB"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C28B08B-D459-49E3-A786-BFFF66FC0927"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PokedexTests/PokedexTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "testFilteredPokemons()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7C28B08B-D459-49E3-A786-BFFF66FC0927 - 7b22f9873a1e9c95"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.testFilteredPokemons() -&gt; ()"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "280">
+               </Location>
+               <Location
+                  uuid = "7C28B08B-D459-49E3-A786-BFFF66FC0927 - 7b22f9873a1e9cb4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.testFilteredPokemons() -&gt; ()"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41"
+                  offsetFromSymbolStart = "280">
+               </Location>
+               <Location
+                  uuid = "7C28B08B-D459-49E3-A786-BFFF66FC0927 - 7b22f9873a1e9c76"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.testFilteredPokemons() -&gt; ()"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "1624">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6609B68-0A08-419A-9079-F801928E2B78"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PokedexTests/PokedexTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "PokedexTests"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 529d7ea9e92eb844"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.getter : Swift.Optional&lt;Pokedex.PokemonViewModel&gt;"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - a248a94ae0b0f830"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.setter : Swift.Optional&lt;Pokedex.PokemonViewModel&gt;"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - e15267cd5aa03841"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.modify : Swift.Optional&lt;Pokedex.PokemonViewModel&gt;"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 9ba77e9c122feea4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.modify : Swift.Optional&lt;Pokedex.PokemonViewModel&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 6a59784aa2ab7012"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init(invocation: Swift.Optional&lt;__C.NSInvocation&gt;) -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - ac075f3208cf2bd8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init(selector: ObjectiveC.Selector) -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "80">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 86fbf6bd9ced48f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init() -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 449bc486c4253d39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.getter : Pokedex.PokemonViewModel"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 4de911bf44b7bfa5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.setter : Pokedex.PokemonViewModel"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "112">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 17a764fe8394cd96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.modify : Pokedex.PokemonViewModel"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - de67b7770cf93ce8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.viewModel.modify : Pokedex.PokemonViewModel with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 6a59784aa2ab7012"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init(invocation: Swift.Optional&lt;__C.NSInvocation&gt;) -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - ac075f3208cf2bd8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init(selector: ObjectiveC.Selector) -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "72">
+               </Location>
+               <Location
+                  uuid = "E6609B68-0A08-419A-9079-F801928E2B78 - 86fbf6bd9ced48f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.init() -&gt; PokedexTests.PokedexTests"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6C0CD67-104B-4E3D-8AEC-7A20B04A9F94"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PokedexTests/PokedexTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "testFetchPokemonDetails()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C6C0CD67-104B-4E3D-8AEC-7A20B04A9F94 - 932606ba1fb2c059"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.testFetchPokemonDetails() -&gt; ()"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  uuid = "C6C0CD67-104B-4E3D-8AEC-7A20B04A9F94 - 932606ba1fb2c076"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PokedexTests.PokedexTests.testFetchPokemonDetails() -&gt; ()"
+                  moduleName = "PokedexTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/francesco/Desktop/Apps/Pokedex/PokedexTests/PokedexTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "152">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
