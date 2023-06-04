@@ -1,5 +1,5 @@
 # Pokedex
-Pokedex is a simple iOS app that allows users to browse and search for information about different Pokemon. It presents a user-friendly interface, realized with SwiftUI.
+Pokedex is a simple iOS app that allows users to browse and search for information about different Pokemon. It presents a user-friendly interface, realized with SwiftUI. The selected design pattern for this project is MVVM. In addition, each function of the view model presents a relative unit test.
 
 ## Features
 - View a list of Pokemon with their name.
